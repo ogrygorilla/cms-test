@@ -1,0 +1,19 @@
+{
+  "name": "cms",
+  "version": "1.0.0",
+  "description": "cms system test version",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cms",
+    "system",
+    "test"
+  ],
+  "author": "3%-Team",
+  "license": "MIT",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
