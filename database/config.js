@@ -5,6 +5,7 @@ const config = {
     database: 'cmstest',
     user: 'cms_user',
     password: 'cms_password',
+    waitForConnections: true
 }
 
 module.exports = config;

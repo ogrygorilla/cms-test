@@ -1,38 +1,41 @@
-'use strict';
+"use strict";
 
-const mysql = require('mysql');
-const config = require('./config');
+const mysql = require("mysql2");
+const config = require("./config");
 
 class Connection {
-    constructor() {
-        this.connection = mysql.createConnection(config);
-    }
-    open() {
-        this.connection.connect((err) => {
-            if (err) {
-                return console.error('error:' + err.message);
-            };
-        });
-        console.log('Connection to database established');
-    };
+  constructor() {
+    this.pool = mysql.createPool(config);
+    this.promisePool = this.pool.promise();
+  }
+  open() {
+    this.pool.connect((err) => {
+      if (err) {
+        return console.error("error:" + err.message);
+      }
+    });
+    console.log("Connection to database established");
+  }
 
-    query(sqlQuery) {
-        return this.connection.query(sqlQuery, (err, results, fields) => {
-            if (err) {
-                console.log(err.message);
-            }
-            return [results, fields];
-        });
-    };
+  async query(sqlQuery) {
+    return await this.promisePool.query(sqlQuery)
+      .then((results) => {
+        //console.log("results: ", results[0]);
+        return results[0];
+      })
+      .catch((err) => {
+        console.log(`SQL query could not be executed, error: ${err}`);
+      });
+  }
 
-    close() {
-        this.connection.end((err) => {
-            if (err) {
-                return console.log(err.message);
-            }
-        });
-        console.log('Connection to database closed');
-    }
-};
+  close() {
+    this.pool.end((err) => {
+      if (err) {
+        return console.log(err.message);
+      }
+    });
+    console.log("Connection to database closed");
+  }
+}
 
 module.exports = Connection;

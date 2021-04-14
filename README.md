@@ -5,5 +5,3 @@
 #run ```npm install```
 
 #run ```node app.js``` from project directory
-
-#see localhost:3333

@@ -7,6 +7,7 @@ const http = require("http");
 
 const Router = require("./core/router");
 const Container = require("./core/container");
+const Client = requre("./core/client");
 
 const HomeController = require("./app/controllers/home");
 const ArticleController = require("./app/controllers/article");
@@ -17,7 +18,7 @@ const router = new Router();
 const container = new Container();
 const connection = new Connection();
 
-connection.open();
+// connection.open();
 
 router.set("/", HomeController, "showHomePage");
 router.set("/article", ArticleController, "showArticlePage");
@@ -26,29 +27,31 @@ router.set("/article/create", ArticleController, "createArticle");
 router.set("/article/delete", ArticleController, "deleteArticle");
 router.set("/signup", AuthController, "register");
 router.set("/signin", AuthController, "login");
+router.set("/signout", AuthController, "logout");
 
 const server = http.createServer((req, res) => {
   let data = "";
   req.on("data", (chunk) => {
     data += chunk;
   });
-  req.on("end", () => {
+  req.on("end", async () => {
     if (data) {
       data.toString();
       const body = JSON.parse(data);
       req.body = body;
     }
 
-    const client = {
-      request: req,
-      response: res,
-    };
+    const client = new Client(req, res);
+
+    console.log("req headers: ",req.headers);
 
     if (req.url !== "/favicon.ico") {
       const handler = router.get(req.url);
       const controller = new handler[0](client);
       const action = handler[1];
-      const result = controller[action]();
+      const result = await controller[action]();
+      console.log("res headers: ", res.headers);
+      console.dir("client: ",client);
       res.end(result);
     }
   });
