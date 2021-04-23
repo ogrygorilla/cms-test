@@ -48,7 +48,7 @@ class AuthController {
             };
 
             this.userService.create(user);
-            return  "USER_ID: "1""//"user registration";
+            return  "user registration";
           }
         }
     }
