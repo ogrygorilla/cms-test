@@ -3,33 +3,24 @@
 class Container {
   constructor() {
     this.dependencies = {};
-    this.factories = {};
   }
 
-  setDependency(key, value) {
-    this.dependencies[key] = value;
+  // dependency -> class name
+  // args -> arguments to be called in constructor
+  set(dependency, args) {
+    this.dependencies[dependency] = new dependency(...args);
   }
 
-  setFactory(key, value) {
-    this.factories[key] = value;
-  }
-
-  get(key, args) {
-    if (!this.dependencies[key]) {
-      const factory = this.factories[key];
-      if (factory) {
-        this.dependencies[key] = this.inject(factory, args);
-      } else {
-        throw new Error("No module found for: " + key);
-      }
+  get(dependency) {
+    if (!this.dependencies[dependency]) {
+      throw new Error(`No instance of ${dependency} found`);
     }
-    return this.dependencies[key];
-  }
-
-  inject(factory, args = []) {
-      const fnArgs = args.map((arg) => this.get(arg));
-      return new factory(...fnArgs);
+    return this.dependencies[dependency];
   }
 }
 
 module.exports = Container;
+
+// if (typeof this.dependencies[key] === "function") {
+//   this.dependencies[key] = this.dependencies[key]().bind(this);
+// }

@@ -1,21 +1,21 @@
 "use strict";
 
 const mysql = require("mysql2");
-const config = require("./config");
 
 class Connection {
-  constructor() {
+  constructor(config) {
     this.pool = mysql.createPool(config);
     this.promisePool = this.pool.promise();
-  }
-  open() {
-    this.pool.connect((err) => {
-      if (err) {
-        return console.error("error:" + err.message);
-      }
-    });
     console.log("Connection to database established");
   }
+
+  // open() {
+  //   this.pool.connect((err) => {
+  //     if (err) {
+  //       return console.error("error:" + err.message);
+  //     }
+  //   });
+  // }
 
   async query(sqlQuery) {
     return await this.promisePool.query(sqlQuery)

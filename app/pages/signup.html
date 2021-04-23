@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CMS_System</title>
+  </head>
+  <body>
+    <h1>Sign up Form</h1>
+    <form id="signupForm">
+      <label for="emailInput">Email</label>
+      <input
+        id="emailInput"
+        type="text"
+        placeholder="Please enter your email here..."
+      />
+      <label for="passwordInput">Password</label>
+      <input
+        id="passwordInput"
+        type="password"
+        placeholder="Please enter your password here..."
+      />
+      <button id="signUpButton" type="submit">Sign Up</button>
+    </form>
+
+    <script>
+      window.onload = async (e) => {
+        const signupForm = document.getElementById("signupForm");
+        const signUpButton = document.getElementById("signUpButton");
+        const emailInput = document.getElementById("emailInput");
+        const passwordInput = document.getElementById("passwordInput");
+
+        const data = {
+          email: "Serg@mail.ru",
+          password: "test",
+        };
+
+        console.log(data);
+
+        signupForm.onsubmit = async (e) => {
+          e.preventDefault();
+
+          fetch("/signup", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((res) => {
+              let data = JSON.parse(res.body);
+              console.log(data);
+              // localStorage.set("userId", data.userId);
+            })
+            .catch((e) => {
+              console.log("Error: ", e);
+            });
+        };
+      };
+
+      window.onerror = async (err) => {
+        console.log("Error from window: ", err);
+      };
+    </script>
+  </body>
+</html>
+
+<style type="text/css">
+  body {
+    background: yellow;
+  }
+</style>

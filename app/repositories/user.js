@@ -1,11 +1,10 @@
 "use strict";
 
-const Connection = require("../../database/connection");
 const UserEntity = require("../entities/user");
 
 class UserRepository {
-  constructor() {
-    this.connection = new Connection();
+  constructor(connection) {
+    this.connection = connection;
   }
 
   add(user) {
@@ -26,6 +25,7 @@ class UserRepository {
                WHERE table_schema = 'cmstest' 
                AND table_name = 'users';
                `;
+
     let rows = await this.connection.query(sql);
     let iterator = rows.values();
     let user = new UserEntity();

@@ -5,53 +5,64 @@ const port = 3333;
 
 const http = require("http");
 
+const DbConfig = require("./database/config");
+const Connection = require("./database/connection");
+
 const Router = require("./core/router");
 const Container = require("./core/container");
-const Client = requre("./core/client");
+const Client = require("./core/client");
 
 const HomeController = require("./app/controllers/home");
-const ArticleController = require("./app/controllers/article");
+
 const AuthController = require("./app/controllers/auth");
-const Connection = require("./database/connection");
+const UserService = require("./app/services/user");
+const SessionStorage = require("./app/storage/session");
+const UserRepository = require("./app/repositories/user");
+
+const ArticleController = require("./app/controllers/article");
 
 const router = new Router();
 const container = new Container();
-const connection = new Connection();
-
-// connection.open();
 
 router.set("/", HomeController, "showHomePage");
+router.set("/signup", AuthController, "signUp");
+router.set("/signin", AuthController, "signIn");
+router.set("/signout", AuthController, "signOut");
 router.set("/article", ArticleController, "showArticlePage");
 router.set("/article/edit", ArticleController, "editArticle");
 router.set("/article/create", ArticleController, "createArticle");
 router.set("/article/delete", ArticleController, "deleteArticle");
-router.set("/signup", AuthController, "register");
-router.set("/signin", AuthController, "login");
-router.set("/signout", AuthController, "logout");
 
-const server = http.createServer((req, res) => {
-  let data = "";
+container.set(Connection, [DbConfig]);
+const connection = container.get(Connection);
+
+const server = http.createServer(async (req, res) => {
+  let requestData = "";
   req.on("data", (chunk) => {
-    data += chunk;
+    requestData += chunk;
   });
   req.on("end", async () => {
-    if (data) {
-      data.toString();
-      const body = JSON.parse(data);
-      req.body = body;
+    if (requestData) {
+      requestData.toString();
+      req.body = JSON.parse(requestData);
     }
 
-    const client = new Client(req, res);
-
-    console.log("req headers: ",req.headers);
-
     if (req.url !== "/favicon.ico") {
+      container.set(Client, [req, res]);
+      container.set(HomeController, [Client]);
+      container.set(UserRepository, [connection]);
+      container.set(UserService, [container.get(UserRepository)]);
+      container.set(SessionStorage, []);
+      container.set(AuthController, [
+        container.get(Client),
+        container.get(UserService),
+        container.get(SessionStorage),
+      ]);
+
       const handler = router.get(req.url);
-      const controller = new handler[0](client);
+      const controller = container.get(handler[0]);
       const action = handler[1];
       const result = await controller[action]();
-      console.log("res headers: ", res.headers);
-      console.dir("client: ",client);
       res.end(result);
     }
   });
