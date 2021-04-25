@@ -18,7 +18,8 @@ class Router {
     console.log(parsedUrl);
     console.log(url);
 
-    throw new Error("Route not found");
+    console.log("Route not found");
+    return false;
   }
 
   set(url, controller, action) {

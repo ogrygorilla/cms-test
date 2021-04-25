@@ -7,7 +7,7 @@
     <title>CMS_System</title>
   </head>
   <body>
-    <h1>Sign up Form</h1>
+    <h1>Sign In Form</h1>
     <nav>
       <ul>
         <li id="homePageLink">
@@ -15,7 +15,7 @@
         </li>
       </ul>
     </nav>
-    <form id="signupForm">
+    <form id="signinForm">
       <label for="emailInput">Email</label>
       <input
         id="emailInput"
@@ -28,12 +28,12 @@
         type="password"
         placeholder="Please enter your password here..."
       />
-      <button id="signUpButton" type="submit">Sign Up</button>
+      <button id="signUpButton" type="submit">Sign In</button>
     </form>
 
     <script>
       window.onload = async (e) => {
-        const signupForm = document.getElementById("signupForm");
+        const signupForm = document.getElementById("signinForm");
         // const signUpButton = document.getElementById("signUpButton");
         // const emailInput = document.getElementById("emailInput");
         // const passwordInput = document.getElementById("passwordInput");
@@ -53,16 +53,26 @@
 
           console.log(data);
 
-          const res = await fetch("/signup", {
+          fetch("/signin", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
+          })
+          .then(async (res) => {
+            const resData = await res.json();
+            console.log("data in signIn page: ", resData);
+            if (!!resData && !!resData.userId) {
+              localStorage.setItem("userId", resData.userId);
+              window.alert(`Welcome ! userId: ${resData.userId}`);
+              // redirect to dashboard or something i.e. createArticle page/hint
+            } else if (resData.message) {
+              console.log("error in signIn page: ", resData.message);
+              // show alert/toast message or validation hints under inputs with purpose to try again
+            }
+            // localStorage.set("userId", data.userId); setItem(), getItem(), removeItem(), clear()
           });
-          console.log("response in signUp page: ", res);
-          const resData = await res.json();
-          console.log("data in signUp page: ", resData);
         };
       };
 

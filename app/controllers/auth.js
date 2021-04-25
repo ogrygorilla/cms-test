@@ -24,61 +24,81 @@ class AuthController {
           path.resolve(__dirname, "../pages/signup.html"),
           "utf8"
         );
-        return signupPage;
+        this.res.end(signupPage);
+        break;
+
       case "POST":
-        let user;
-        if (
-          this.req.method === "POST" &&
-          this.req.body &&
-          this.req.body.email
-        ) {
-          user = await this.userService.findUserByEmail(this.req.body.email);
+        if (this.req.body && this.req.body.email) {
+          let user = await this.userService.findUserByEmail(this.req.body.email);
+          let data = {};
 
           console.log(user);
 
-          if (user && user.id) {
-            let error = {
-              message: "USER_ALREADY_EXISTS"
-            }
-            return JSON.stringify(error);
+          if (!!user && !!user.id) {
+            // this.res.statusCode = 403; // resource with the given definition already exists
+            data = {message: "USER_ALREADY_EXISTS"};
           } else {
-            let user = {
+            let newUser = {
               email: this.req.body.email,
               password: this.req.body.password,
             };
 
-            this.userService.create(user);
-            return  "user registration";
+            if (this.userService.create(newUser)){
+              // this.res.statusCode = 201; // user created
+              data = {message: "USER_CREATED"};
+            } else {
+              // this.res.statusCode = 500; // internal server error, user couldn't be created
+              data = {message: "USER_CANNOT_BE_CREATED"};
+            }
           }
+          this.res.setHeader("Content-Type", "application/json");
+          this.res.write(JSON.stringify(data));
+          this.res.end();
         }
+        break;
     }
   }
 
   async signIn() {
-    let user;
-    if (this.req.body.email && this.req.body.password) {
-      user = await this.userService.findUserByEmail(this.req.body.email);
-      console.log(user);
-      if (user && user.id) {
-        this.user = user;
-        this.session.start(user.id);
-        const token = this.session.getToken(user.id);
+    switch (this.req.method) {
+      case "GET":
+        const signinPage = fs.readFileSync(
+          path.resolve(__dirname, "../pages/signin.html"),
+          "utf8"
+        );
+        this.res.write(signinPage);
+        this.res.end();
+        break;
 
-        return `user logged in user id: ${
-          user.id
-        }, token: ${token}, ${JSON.encode(this.user)}`;
-      } else {
-        return `No user with email: "${this.req.body.email}" found`;
-      }
+      case "POST":
+        if (this.req.body.email && this.req.body.password) {
+          let data = await this.userService.signIn(
+            this.req.body.email,
+            this.req.body.password
+          );
+
+          console.dir(!data.userId);
+
+          if (!data.userId) {
+            // this.res.statusCode = 200; // OK
+            data = {message: "SIGN_IN_FAILED"};
+          }
+
+          console.log("data in controller: ", data);
+          this.res.setHeader("Content-Type", "application/json");
+          this.res.write(JSON.stringify(data));
+          this.res.end();
+        }
+        break;
     }
   }
 
-  async signOut() {
-    console.log(this.user);
-    this.session.end(this.user.id);
-    const token = this.session.getToken(this.user.id);
-    return `user with this Id: ${this.userId} is loged out, token value: ${token}`;
-  }
+  // async signOut() {
+  //   console.log(this.user);
+  //   this.session.end(this.user.id);
+  //   const token = this.session.getToken(this.user.id);
+  //   return `user with this Id: ${this.userId} is loged out, token value: ${token}`;
+  // }
 }
 
 module.exports = AuthController;

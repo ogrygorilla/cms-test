@@ -7,15 +7,16 @@ class UserRepository {
     this.connection = connection;
   }
 
-  add(user) {
+  async add(user) {
     let sql = `
             INSERT INTO users
             SET email = "${user.email}",
                 password = "${user.password}"
                 ;
         `;
-    const result = this.connection.query(sql);
+    const result = await this.connection.query(sql);
     console.log("add user: ", result);
+    return "userId here";
   }
 
   async getByField(field, value) {
@@ -40,7 +41,6 @@ class UserRepository {
         `;
 
         let rows2 = await this.connection.query(sql);
-        // console.log(rows2);
         if (rows2[0]) {
           user.setId(rows2[0]['id']);
           user.setEmail(rows2[0]['email']);

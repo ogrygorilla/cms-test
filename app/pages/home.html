@@ -11,27 +11,58 @@
     <button id="testClick">TestClick!</button>
 
     <nav>
-        <ul>
-            <li>
-                <a href="/">Home Page</a>
-            </li>
-            <li>
-                <a href="/signup">Sign Up</a>
-            </li>
-        </ul>
+      <ul>
+        <li id="homePageLink">
+          <a href="/">Home Page</a>
+        </li>
+        <li id="createArticleItem" class="hide">
+          <a href="/article/create">Create Article (not implemented yet)</a>
+        </li>
+        <li id="signupItem">
+          <a href="/signup">Sign Up</a>
+        </li>
+        <li id="signinItem" class="testClass">
+          <a href="/signin">Sign In</a>
+        </li>
+        <li id="signoutItem" class="hide">
+          <button id="signoutButton"><a href="/">Sign Out</a></button>
+        </li>
+      </ul>
     </nav>
-    <!-- <script>
-      const testButton = document.getElementById("testClick");
+    <script>
+      window.onload = async (e) => {
+        const signoutButton = document.getElementById("signoutButton");
+        const signoutItem = document.getElementById("signoutItem");
+        const createArticleItem = document.getElementById("createArticleItem");
+        const user = localStorage.getItem("userId");
+        console.log(user);
 
-      testButton.onclick = async (e) => {
-          console.log("worked! event: ", e)
+        if (user) {
+          signoutItem.classList.remove("hide");
+          createArticleItem.classList.remove("hide");
+
+          signoutButton.onclick = async (e) => {
+            console.log("signed out!", e);
+            localStorage.removeItem("userId");
+            console.log(signoutItem.classList);
+            signoutItem.classList.add("hide");
+            createArticleItem.classList.add("hide");
+          };
+        } else {
+          signoutItem.classList.add("hide");
+          createArticleItem.classList.add("hide");
+        }
       };
-    </script> -->
+    </script>
   </body>
 </html>
 
 <style type="text/css">
   body {
     background: yellow;
+  }
+
+  .hide {
+    display: none;
   }
 </style>

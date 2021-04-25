@@ -3,21 +3,21 @@
 const fs = require("fs");
 const path = require("path");
 
-class HomeController {
+class NotFoundController {
   constructor(client) {
     this.req = client.req;
     this.res = client.res;
   }
 
-  showHomePage() {
+  showNotFoundPage() {
     console.log(this.req.method);
     switch (this.req.method) {
       case "GET":
-        const homePage = fs.readFileSync(
-          path.resolve(__dirname, "../pages/home.html"),
+        const notFoundPage = fs.readFileSync(
+          path.resolve(__dirname, "../pages/notFound.html"),
           "utf8"
         );
-        this.res.write(homePage);
+        this.res.write(notFoundPage);
         this.res.end();
         break;
     }
@@ -25,4 +25,4 @@ class HomeController {
   }
 }
 
-module.exports = HomeController;
+module.exports = NotFoundController;

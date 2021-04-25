@@ -21,13 +21,15 @@ const UserRepository = require("./app/repositories/user");
 
 const ArticleController = require("./app/controllers/article");
 
+const NotFoundController = require("./app/controllers/notFound");
+
 const router = new Router();
 const container = new Container();
 
 router.set("/", HomeController, "showHomePage");
 router.set("/signup", AuthController, "signUp");
 router.set("/signin", AuthController, "signIn");
-router.set("/signout", AuthController, "signOut");
+// router.set("/signout", AuthController, "signOut");
 router.set("/article", ArticleController, "showArticlePage");
 router.set("/article/edit", ArticleController, "editArticle");
 router.set("/article/create", ArticleController, "createArticle");
@@ -49,7 +51,7 @@ const server = http.createServer(async (req, res) => {
 
     if (req.url !== "/favicon.ico") {
       container.set(Client, [req, res]);
-      container.set(HomeController, [Client]);
+      container.set(HomeController, [container.get(Client)]);
       container.set(UserRepository, [connection]);
       container.set(UserService, [container.get(UserRepository)]);
       container.set(SessionStorage, []);
@@ -58,13 +60,24 @@ const server = http.createServer(async (req, res) => {
         container.get(UserService),
         container.get(SessionStorage),
       ]);
+      container.set(NotFoundController, [container.get(Client)]);
 
-      const handler = router.get(req.url);
-      const controller = container.get(handler[0]);
-      const action = handler[1];
-      const result = await controller[action]();
-      res.end(result);
+      const routeHandler = router.get(req.url);
+      if (!routeHandler) {
+        const controller = container.get(NotFoundController);
+        const action = "showNotFoundPage";
+        controller[action]();
+      } else {
+        const controller = container.get(routeHandler[0]);
+        const action = routeHandler[1];
+        controller[action]();
+      }
+      //const result = await controller[action]();
+      //res.end(result);
     }
+  });
+  req.on("err", (err) => {
+    console.log("error: ", err);
   });
 });
 
