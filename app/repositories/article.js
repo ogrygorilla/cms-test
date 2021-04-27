@@ -1,41 +1,21 @@
 'use strict';
 
-const Connection = require("../../database/connection");
+const Connection = require("../../database/connectionMySQL");
 
 class ArticleRepository {
     constructor() {
         this.connection = new Connection();
     };
 
-    
-    findOne() {
+    add() {}
 
-    }
+    getByField() {}
 
-    findAll() {
+    getAll() {}
 
-    }
+    update() {}
 
-    add(article) {
-        let sql = `
-            INSERT INTO articles
-                SET title = "${article.title}",
-                    content = "${article.content}",
-                    author = "${article.author}"
-                    ;
-        `; 
-
-        const result = this.connection.query(sql);
-        console.log('add article: ', result);
-    }
-
-    update() {
-
-    }
-
-    delete() {
-
-    }
+    delete() {}
 };
 
 module.exports = ArticleRepository;

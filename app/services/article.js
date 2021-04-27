@@ -6,9 +6,9 @@ const ArticleRepository = require("../repositories/article");
 const UserEntity = require("../entities/user");
 
 class ArticleService {
-    constructor() {
-        this.user = new UserEntity();
-        this.articleRepository = new ArticleRepository();
+    constructor(articleRepository) {
+        //this.user = new UserEntity();
+        this.articleRepository = articleRepository;
     };
 
     getAll() {

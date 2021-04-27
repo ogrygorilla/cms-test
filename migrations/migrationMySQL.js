@@ -1,10 +1,10 @@
 "use strict";
 
-const Connection = require("../database/connection");
+const ConnectionMySQL = require("../database/connectionMySQL");
 
-class MigrationInitial {
+class MigrationInitialMySQL {
   constructor() {
-    this.connection = new Connection();
+    this.connection = new ConnectionMySQL();
     try {
       this.createUsers();
       this.createArticles()
@@ -61,7 +61,7 @@ class MigrationInitial {
   }
 }
 
-new MigrationInitial(Connection);
+new MigrationInitialMySQL(Connection);
 
 // let sql = `
 //     CREATE TABLE IF NOT EXISTS users(

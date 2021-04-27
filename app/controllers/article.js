@@ -1,39 +1,72 @@
 "use strict";
 
-const ArticleService = require("../services/article");
+const fs = require("fs");
+const path = require("path");
 
 class ArticleController {
-  constructor(client) {
+  constructor(client, articleService) {
     this.req = client.request;
     this.res = client.response;
-    this.articleService = new ArticleService();
-  }
-
-  showArticlePage() {
-    this.articleService.getAll();
-    return "Hello from Article detail view!";
-  }
-
-  editArticle() {
-    this.articleService.update();
-    return "Article will be updated!";
+    this.articleService = articleService;
   }
 
   createArticle() {
-    // if (this.req.body.title && this.req.body.content) {
-    //   let article = {
-    //     title: this.req.body.title,
-    //     content: this.req.body.content,
-    //   };
+    switch (this.req.method) {
+      case "GET":
+        const signinPage = fs.readFileSync(
+          path.resolve(__dirname, "../pages/createArticle.html"),
+          "utf8"
+        );
+        this.res.write(signinPage);
+        this.res.end();
+        break;
+      case "POST":
+        // create article here, we get userId , title, content from client
+        break;
+    }
+  }
 
-    //   // this.articleService.create(article);
-    // }
-    return "Article will be created!";
+  showArticlePage() {
+    switch (this.req.method) {
+      case "GET":
+        const signinPage = fs.readFileSync(
+          path.resolve(__dirname, "../pages/article.html"),
+          "utf8"
+        );
+        this.res.write(signinPage);
+        this.res.end();
+        break;
+    }
+  }
+
+  editArticle() {
+    switch (this.req.method) {
+      case "GET":
+        // show edit article page, which should be similar to createArticle page
+        // but sending differen requests
+        const signinPage = fs.readFileSync(
+          path.resolve(__dirname, "../pages/createArticle.html"),
+          "utf8"
+        );
+        this.res.write(signinPage);
+        this.res.end();
+        break;
+      case "PATCH":
+        // update article here
+        // we get userId(local storage) and articleId(event target) from front end
+        // article must be existing, we just puuting new values to it, were is = article id, author = userId
+        break;
+    }
   }
 
   deleteArticle() {
-    this.articleService.delete();
-    return "Article will be deleted!";
+    switch (this.req.method) {
+      case "DELETE":
+        // delete article here, get artcileId(event target) from frontend
+        this.res.write(signinPage);
+        this.res.end();
+        break;
+    }
   }
 }
 

@@ -5,39 +5,53 @@ const port = 3333;
 
 const http = require("http");
 
-const DbConfig = require("./database/config");
-const Connection = require("./database/connection");
-
-const Router = require("./core/router");
-const Container = require("./core/container");
+// import core modules
 const Client = require("./core/client");
+const Container = require("./core/container");
+const Router = require("./core/router");
 
-const HomeController = require("./app/controllers/home");
+// import needed modules for database connection
+const DbConfig = require("./database/config");
+const ConnectionMySQL = require("./database/connectionMySQL");
+const ConnectionMongoDB = require("./database/connectionMongoDB");
 
-const AuthController = require("./app/controllers/auth");
-const UserService = require("./app/services/user");
-const SessionStorage = require("./app/storage/session");
+// import repositories, which are representing 
+// data abstraction layer (DAL) of the application
+const ArticleRepository = require("./app/repositories/article");
 const UserRepository = require("./app/repositories/user");
 
-const ArticleController = require("./app/controllers/article");
+// import services, which are representing
+// business logic layer (BLL) of the application
+const ArticleService = require("./app/services/article");
+const UserService = require("./app/services/user");
 
+// import controller, which are representing
+// the layer to handle external processes of the application
+const ArticleController = require("./app/controllers/article");
+const AuthController = require("./app/controllers/auth");
+const HomeController = require("./app/controllers/home");
 const NotFoundController = require("./app/controllers/notFound");
 
-const router = new Router();
-const container = new Container();
+const SessionStorage = require("./app/storage/session");
 
+// initialize routes for the application
+const router = new Router();
 router.set("/", HomeController, "showHomePage");
 router.set("/signup", AuthController, "signUp");
 router.set("/signin", AuthController, "signIn");
-// router.set("/signout", AuthController, "signOut");
 router.set("/article", ArticleController, "showArticlePage");
 router.set("/article/edit", ArticleController, "editArticle");
 router.set("/article/create", ArticleController, "createArticle");
 router.set("/article/delete", ArticleController, "deleteArticle");
 
-container.set(Connection, [DbConfig]);
-const connection = container.get(Connection);
+// initialize container for handling dependencies of the application
+const container = new Container();
+container.set(ConnectionMySQL, [DbConfig.mySQL]);
+const connectionMySql = container.get(ConnectionMySQL);
+container.set(ConnectionMongoDB, [DbConfig.mongoDB]);
+const connectionMongoDB = container.get(ConnectionMongoDB);
 
+// initialize server for the application and define its behaviour
 const server = http.createServer(async (req, res) => {
   let requestData = "";
   req.on("data", (chunk) => {
@@ -51,15 +65,28 @@ const server = http.createServer(async (req, res) => {
 
     if (req.url !== "/favicon.ico") {
       container.set(Client, [req, res]);
-      container.set(HomeController, [container.get(Client)]);
-      container.set(UserRepository, [connection]);
+      // initialize repositories
+      container.set(ArticleRepository, [connectionMongoDB]);
+      container.set(UserRepository, [connectionMySql]);
+
+      // initialize services
+      container.set(ArticleService, [container.get(ArticleRepository)]);
       container.set(UserService, [container.get(UserRepository)]);
+
+      // initialize helper modules ?
       container.set(SessionStorage, []);
+
+      // initialize controllers
+      container.set(ArticleController, [
+        container.get(Client),
+        container.get(ArticleService),
+      ]);
       container.set(AuthController, [
         container.get(Client),
         container.get(UserService),
         container.get(SessionStorage),
       ]);
+      container.set(HomeController, [container.get(Client)]);
       container.set(NotFoundController, [container.get(Client)]);
 
       const routeHandler = router.get(req.url);
@@ -81,6 +108,7 @@ const server = http.createServer(async (req, res) => {
   });
 });
 
+// start application server
 server.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });

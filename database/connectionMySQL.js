@@ -2,11 +2,11 @@
 
 const mysql = require("mysql2");
 
-class Connection {
+class ConnectionMySQL {
   constructor(config) {
     this.pool = mysql.createPool(config);
     this.promisePool = this.pool.promise();
-    console.log("Connection to database established");
+    console.log("Connection to SQL database established");
   }
 
   // open() {
@@ -38,4 +38,4 @@ class Connection {
   }
 }
 
-module.exports = Connection;
+module.exports = ConnectionMySQL;
