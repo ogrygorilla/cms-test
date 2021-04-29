@@ -3,8 +3,8 @@
 const Connection = require("../../database/connectionMySQL");
 
 class ArticleRepository {
-    constructor() {
-        this.connection = new Connection();
+    constructor(connection) {
+        this.connection = connection;
     };
 
     add() {}

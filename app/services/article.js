@@ -1,24 +1,34 @@
 'use strict';
-
-const ArticleEntity = require("../entities/article");
-const ArticleRepository = require("../repositories/article");
-
-const UserEntity = require("../entities/user");
-
 class ArticleService {
-    constructor(articleRepository) {
+    constructor(connectionMongoDB) {
         //this.user = new UserEntity();
-        this.articleRepository = articleRepository;
+        this.articleRepository = connectionMongoDB.connection.client;
     };
 
-    getAll() {
+    async findArticleByTitle(articleTitle) {
+        //console.log(this.articleRepository);
+        const db = await this.articleRepository.db("cmstest");
+        const result = await db.collection("articles").findOne({ title: articleTitle});
 
+        if (result) {
+            return result;
+        } else {
+            console.log("Article with such title could not be found");
+            return false;
+        };
     };
 
-    create(article) {
-        // article.author = this.user.id;
-        // let articleEntity = new ArticleEntity(article);
-        // this.articleRepository.add();
+    async createArticle(article) {
+        const result = await this.articleRepository.db("cmstest").collection("articles").insertOne(article);
+
+        if (result) {
+            console.log("article created: ", result);
+            return result.insertedId;
+        } else {
+            console.log("Article could not be created");
+            return false;
+        };
+
     };
 
     update() {

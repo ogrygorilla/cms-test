@@ -2,15 +2,16 @@
 
 const fs = require("fs");
 const path = require("path");
+const { title } = require("process");
 
 class ArticleController {
   constructor(client, articleService) {
-    this.req = client.request;
-    this.res = client.response;
+    this.req = client.req;
+    this.res = client.res;
     this.articleService = articleService;
   }
 
-  createArticle() {
+  async createArticle() {
     switch (this.req.method) {
       case "GET":
         const signinPage = fs.readFileSync(
@@ -21,7 +22,24 @@ class ArticleController {
         this.res.end();
         break;
       case "POST":
-        // create article here, we get userId , title, content from client
+        let data;
+        if (await this.articleService.findArticleByTitle(this.req.body.title)) {
+          console.log("Article with such title already exists");
+          data = { message: "Article with such title already exists" };
+          console.log("article in controller:");
+        } else {
+          const article = {
+            title: this.req.body.title,
+            content: this.req.body.content,
+            author: this.req.body.author,
+          };
+          data = await this.articleService.createArticle(article);
+        }
+        this.res.setHeader("Content-Type", "application/json");
+        this.res.write(JSON.stringify(data));
+        this.res.end();
+        // check if post with such title already exists if yes -> send message on front
+        // if not, create new item in the collection
         break;
     }
   }

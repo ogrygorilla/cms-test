@@ -6,20 +6,21 @@ class ConnectionMongoDB {
   constructor(config) {
     this.url = config.url;
     this.options = config.options;
+    this.client = null;
     this.connect();
   }
 
   async connect() {
-    const client = await mongoClient
+     this.client = await mongoClient
       .connect(this.url, this.options)
       .catch((err) => console.log("MongoDB connection error: ", err));
-    if (client) {
-        console.log("MongoDB connected");
-        const db = await client.db("cmstest");
-        const cursor = await db.collection("testProducts").find();
-        const result = await cursor.toArray();
-        console.log("testProducts collection: ", result);
 
+    if (this.client) {
+      console.log("MongoDB connected");
+      const db = await this.client.db("cmstest");
+      const cursor = await db.collection("testProducts").find();
+      const result = await cursor.toArray();
+      console.log("testProducts collection: ", result);
     }
   }
 }
