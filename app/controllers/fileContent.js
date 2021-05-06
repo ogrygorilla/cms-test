@@ -3,22 +3,21 @@
 const fs = require("fs");
 const path = require("path");
 
-class HomeController {
-  constructor(client, articleService) {
+class FileContentController {
+  constructor(client) {
     this.req = client.req;
     this.res = client.res;
-    this.articleService = articleService;
   }
 
-  showHomePage() {
+  getFileContent(fileAdditionalPath) {
     console.log(this.req.method);
     switch (this.req.method) {
       case "GET":
-        const homePage = fs.readFileSync(
-          path.resolve(__dirname, "../pages/home.html"), 
+        const fileContent = fs.readFileSync(
+          "C:/Users/Administrator/Projects/plain/nodejs/cms" + fileAdditionalPath,
           "utf8"
         );
-        this.res.write(homePage);
+        this.res.write(fileContent);
         this.res.end();
         break;
     }
@@ -26,4 +25,4 @@ class HomeController {
   }
 }
 
-module.exports = HomeController;
+module.exports = FileContentController;

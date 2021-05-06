@@ -44,7 +44,7 @@ class ArticleController {
     }
   }
 
-  showArticlePage() {
+  async showArticlePage() {
     switch (this.req.method) {
       case "GET":
         const signinPage = fs.readFileSync(
@@ -57,7 +57,7 @@ class ArticleController {
     }
   }
 
-  editArticle() {
+  async editArticle() {
     switch (this.req.method) {
       case "GET":
         // show edit article page, which should be similar to createArticle page
@@ -77,11 +77,24 @@ class ArticleController {
     }
   }
 
-  deleteArticle() {
+  async deleteArticle() {
     switch (this.req.method) {
       case "DELETE":
         // delete article here, get artcileId(event target) from frontend
         this.res.write(signinPage);
+        this.res.end();
+        break;
+    }
+  }
+
+  async getAllArticles() {
+    switch (this.req.method) {
+      case "GET":
+        // delete article here, get artcileId(event target) from frontend
+        let data = await this.articleService.findAllArticles();
+        data = data ? data: {};
+        this.res.setHeader("Content-Type", "application/json");
+        this.res.write(JSON.stringify(data));
         this.res.end();
         break;
     }

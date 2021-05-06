@@ -5,6 +5,8 @@ const port = 3333;
 
 const http = require("http");
 
+const path = require("path");
+
 // import core modules
 const Client = require("./core/client");
 const Container = require("./core/container");
@@ -15,7 +17,7 @@ const DbConfig = require("./database/config");
 const ConnectionMySQL = require("./database/connectionMySQL");
 const ConnectionMongoDB = require("./database/connectionMongoDB");
 
-// import repositories, which are representing 
+// import repositories, which are representing
 // data abstraction layer (DAL) of the application
 const ArticleRepository = require("./app/repositories/article");
 const UserRepository = require("./app/repositories/user");
@@ -25,12 +27,13 @@ const UserRepository = require("./app/repositories/user");
 const ArticleService = require("./app/services/article");
 const UserService = require("./app/services/user");
 
-// import controller, which are representing
+// import controllers, which are representing
 // the layer to handle external processes of the application
 const ArticleController = require("./app/controllers/article");
 const AuthController = require("./app/controllers/auth");
 const HomeController = require("./app/controllers/home");
 const NotFoundController = require("./app/controllers/notFound");
+//const FileContentController = require("./app/controllers/fileContent");
 
 const SessionStorage = require("./app/storage/session");
 
@@ -40,9 +43,11 @@ router.set("/", HomeController, "showHomePage");
 router.set("/signup", AuthController, "signUp");
 router.set("/signin", AuthController, "signIn");
 router.set("/article", ArticleController, "showArticlePage");
+router.set("/articles", ArticleController, "getAllArticles");
 router.set("/article/edit", ArticleController, "editArticle");
 router.set("/article/create", ArticleController, "createArticle");
 router.set("/article/delete", ArticleController, "deleteArticle");
+// router.set("/@cms/*", FileContentController, "getFileContent");
 
 // initialize container for handling dependencies of the application
 const container = new Container();
@@ -66,11 +71,11 @@ const server = http.createServer(async (req, res) => {
     if (req.url !== "/favicon.ico") {
       container.set(Client, [req, res]);
       // initialize repositories
-      container.set(ArticleRepository, [connectionMongoDB]);
+      //container.set(ArticleRepository, [connectionMongoDB]);
       container.set(UserRepository, [connectionMySql]);
 
       // initialize services
-      container.set(ArticleService, [container.get(ArticleRepository)]);
+      container.set(ArticleService, [connectionMongoDB]);
       container.set(UserService, [container.get(UserRepository)]);
 
       // initialize helper modules ?
@@ -86,8 +91,12 @@ const server = http.createServer(async (req, res) => {
         container.get(UserService),
         container.get(SessionStorage),
       ]);
-      container.set(HomeController, [container.get(Client)]);
+      container.set(HomeController, [
+        container.get(Client),
+        container.get(ArticleService),
+      ]);
       container.set(NotFoundController, [container.get(Client)]);
+      //container.set(FileContentController, [container.get(Client)]);
 
       const routeHandler = router.get(req.url);
       if (!routeHandler) {
