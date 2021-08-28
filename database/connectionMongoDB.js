@@ -16,11 +16,11 @@ class ConnectionMongoDB {
       .catch((err) => console.log("MongoDB connection error: ", err));
 
     if (this.client) {
+      // const db = await this.client.db("cmstest");
+      // const cursor = await db.collection("testProducts").find();
+      // const result = await cursor.toArray();
+      // console.log("testProducts collection: ", result);
       console.log("MongoDB connected");
-      const db = await this.client.db("cmstest");
-      const cursor = await db.collection("testProducts").find();
-      const result = await cursor.toArray();
-      console.log("testProducts collection: ", result);
     }
   }
 }
