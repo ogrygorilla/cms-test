@@ -1,7 +1,5 @@
 "use strict";
 
-const UserEntity = require("../entities/user");
-
 class UserService {
   constructor(userRepository) {
     this.userRepository = userRepository;
@@ -10,7 +8,6 @@ class UserService {
   // check if password matches here, codierung/ decodierung also here, or on the repository level?
 
   async create(user) {
-    // this.user = new UserEntity(user.email, user.password);
     try {
        await this.userRepository.add(user);
        return true;
