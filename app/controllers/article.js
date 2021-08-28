@@ -2,7 +2,6 @@
 
 const fs = require("fs");
 const path = require("path");
-const { title } = require("process");
 
 class ArticleController {
   constructor(client, articleService) {
@@ -47,11 +46,11 @@ class ArticleController {
   async showArticlePage() {
     switch (this.req.method) {
       case "GET":
-        const signinPage = fs.readFileSync(
+        const articlePage = fs.readFileSync(
           path.resolve(__dirname, "../pages/article.html"),
           "utf8"
         );
-        this.res.write(signinPage);
+        this.res.write(articlePage);
         this.res.end();
         break;
     }
@@ -59,20 +58,20 @@ class ArticleController {
 
   async editArticle() {
     switch (this.req.method) {
-      case "GET":
-        // show edit article page, which should be similar to createArticle page
-        // but sending differen requests
-        const signinPage = fs.readFileSync(
-          path.resolve(__dirname, "../pages/createArticle.html"),
-          "utf8"
-        );
-        this.res.write(signinPage);
+      case "PUT":
+        let data;
+        let article = {
+          title: this.req.body.title,
+          content: this.req.body.content,
+          author: this.req.body.author
+        };
+
+        if (await this.articleService.updateArticleById(this.req.body._id, article)) {
+          data = { message: "Article successfully updated" };
+        }
+        this.res.setHeader("Content-Type", "application/json");
+        this.res.write(JSON.stringify(data));
         this.res.end();
-        break;
-      case "PATCH":
-        // update article here
-        // we get userId(local storage) and articleId(event target) from front end
-        // article must be existing, we just puuting new values to it, were is = article id, author = userId
         break;
     }
   }
@@ -81,7 +80,12 @@ class ArticleController {
     switch (this.req.method) {
       case "DELETE":
         // delete article here, get artcileId(event target) from frontend
-        this.res.write(signinPage);
+        let data;
+        if (await this.articleService.deleteArticleById(this.req.body.articleId)) {
+          data = { message: "Article successfully deleted" };
+        }
+        this.res.setHeader("Content-Type", "application/json");
+        this.res.write(JSON.stringify(data));
         this.res.end();
         break;
     }
@@ -92,7 +96,7 @@ class ArticleController {
       case "GET":
         // delete article here, get artcileId(event target) from frontend
         let data = await this.articleService.findAllArticles();
-        data = data ? data: {};
+        data = data ? data : {};
         this.res.setHeader("Content-Type", "application/json");
         this.res.write(JSON.stringify(data));
         this.res.end();

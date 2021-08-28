@@ -16,7 +16,7 @@
           <a href="/">Home Page</a>
         </li>
         <li id="createArticleItem" class="hide">
-          <a href="/article/create">Create Article (not implemented yet)</a>
+          <a href="/article/create">Create Article</a>
         </li>
         <li id="signupItem">
           <a href="/signup">Sign Up</a>
@@ -29,14 +29,7 @@
         </li>
       </ul>
     </nav>
-    <div class="articles" id="articlesDiv">
-      <div class="article">
-        <strong>Title</strong>
-        <strong>Author</strong>
-        <br />
-        <p>Content</p>
-      </div>
-    </div>
+    <div class="articles" id="articlesDiv"></div>
     <script>
       // async event handler for window global object onload event
       window.onload = async (e) => {
@@ -78,11 +71,15 @@
               resData.forEach((article) => {
                 console.log(article);
                 article = `
-              <div class="article" id="article${article._id}">
-                  <strong>${article.title}</strong>
+              <div class="article" id="${article._id}">
+                  <strong>
+                    <a href="/article/${article._id}">
+                      ${article.title}
+                    </a>
+                  </strong>
                   <br />
                   <p>${article.content}</p>
-                </div>
+              </div>
               `;
                 articles.push(article);
               });
@@ -97,6 +94,8 @@
           });
 
         // get needed dom elements and save them into variables
+        const signupItem = document.getElementById("signupItem");
+        const signinItem = document.getElementById("signinItem");
         const signoutButton = document.getElementById("signoutButton");
         const signoutItem = document.getElementById("signoutItem");
         const createArticleItem = document.getElementById("createArticleItem");
@@ -114,6 +113,9 @@
           signoutItem.classList.remove("hide");
           createArticleItem.classList.remove("hide");
 
+          signupItem.classList.add("hide");
+          signinItem.classList.add("hide");
+
           // Handler for case if signout button is clicked
           signoutButton.onclick = async (e) => {
             console.log("signed out!", e);
@@ -125,6 +127,9 @@
             // by adding `hide` class to elements
             signoutItem.classList.add("hide");
             createArticleItem.classList.add("hide");
+
+            signupItem.classList.remove("hide");
+            signinItem.classList.remove("hide");
           };
         } else {
           // If no user in the local storage, then we should
@@ -150,11 +155,22 @@
       };
     </script>
   </body>
+  <script type="module" src="../scripts/home.js"></script>
 </html>
 
 <style type="text/css">
   body {
     background: yellow;
+  }
+
+  /* remove text underline in the `<a>` tag*/
+  a {
+    text-decoration: none;
+    color: black
+  }
+
+  a:hover {
+    border-bottom: 1px solid black  ;
   }
 
   /* class for hiding elements */
