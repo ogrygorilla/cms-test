@@ -68,6 +68,7 @@
             if (!!resData && !!resData.userId) {
               localStorage.setItem("userId", resData.userId);
               window.alert(`Welcome ! userId: ${resData.userId}`);
+              window.location.href = "/";
               // redirect to dashboard or something i.e. createArticle page/hint
             } else if (resData.message) {
               console.log("error in signIn page: ", resData.message);
