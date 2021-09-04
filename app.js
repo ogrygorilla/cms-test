@@ -5,8 +5,6 @@ const port = 3333;
 
 const http = require("http");
 
-const path = require("path");
-
 // import core modules
 const Client = require("./core/client");
 const Container = require("./core/container");
@@ -19,7 +17,6 @@ const ConnectionMongoDB = require("./database/connectionMongoDB");
 
 // import repositories, which are representing
 // data abstraction layer (DAL) of the application
-const ArticleRepository = require("./app/repositories/article");
 const UserRepository = require("./app/repositories/user");
 
 // import services, which are representing
@@ -42,10 +39,10 @@ const router = new Router();
 router.set("/", HomeController, "showHomePage");
 router.set("/signup", AuthController, "signUp");
 router.set("/signin", AuthController, "signIn");
-router.set("/article", ArticleController, "showArticlePage");
 router.set("/articles", ArticleController, "getAllArticles");
-router.set("/article/edit", ArticleController, "editArticle");
+router.set("/article", ArticleController, "showArticlePage");
 router.set("/article/create", ArticleController, "createArticle");
+router.set("/article/edit", ArticleController, "editArticle");
 router.set("/article/delete", ArticleController, "deleteArticle");
 // router.set("/@cms/*", FileContentController, "getFileContent");
 
@@ -78,9 +75,6 @@ const server = http.createServer(async (req, res) => {
       container.set(ArticleService, [connectionMongoDB]);
       container.set(UserService, [container.get(UserRepository)]);
 
-      // initialize helper modules ?
-      container.set(SessionStorage, []);
-
       // initialize controllers
       container.set(ArticleController, [
         container.get(Client),
@@ -96,8 +90,8 @@ const server = http.createServer(async (req, res) => {
         container.get(ArticleService),
       ]);
       container.set(NotFoundController, [container.get(Client)]);
-      //container.set(FileContentController, [container.get(Client)]);
 
+      // consider edge cases
       const routeHandler = router.get(req.url);
       if (!routeHandler) {
         const controller = container.get(NotFoundController);
@@ -108,8 +102,6 @@ const server = http.createServer(async (req, res) => {
         const action = routeHandler[1];
         controller[action]();
       }
-      //const result = await controller[action]();
-      //res.end(result);
     }
   });
   req.on("err", (err) => {
