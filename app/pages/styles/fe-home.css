@@ -1,0 +1,64 @@
+/* Standard view := mobile */
+.articles {
+    /* layout */
+    /* max-width: 800px; */
+    width: min(95%, 800px);
+
+    /* flexing articles*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    /* positioning self */
+    align-self:center;
+}
+.article-preview {
+    display: flex;
+    flex-direction: column;
+
+    /* layout */
+    width: 100%;
+    margin-top: min(2.5%, 2.5vh);
+
+    /* color/style */
+    background: #fff;
+    color: #3a3c47;
+    border: 1px solid #e1e2f0;
+    /* border-radius: 20px;  */
+    box-shadow: 5px 5px 10px 0px lightgray;
+}
+
+.article-preview:hover {
+    box-shadow: 5px 5px 10px 0px rgba(255, 140, 0, 0.5);
+    border: 1px solid rgba(255, 140, 0, 0.5);
+    cursor: pointer;
+}
+
+
+/* JS ->
+<div class="author-date">
+              <a href="/author" rel="author">Author</a>
+              <time datetime="2021-08-25">25.08.2021</time>
+            </div>
+            */
+            
+/* .author-date{
+    display: flex;
+    flex-direction: row;   
+}
+.author-date *{
+    margin-right: 1em;
+}
+.author-date a{
+    text-decoration: none;
+    color: #3a3c47;
+    font-weight: bold; 
+} */
+
+.article-preview {
+    padding: 2.5%;
+}
+.article-preview div, .article-preview p {
+    margin-top: 1%;
+}
+
