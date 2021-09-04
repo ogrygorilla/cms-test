@@ -30,9 +30,6 @@ const ArticleController = require("./app/controllers/article");
 const AuthController = require("./app/controllers/auth");
 const HomeController = require("./app/controllers/home");
 const NotFoundController = require("./app/controllers/notFound");
-//const FileContentController = require("./app/controllers/fileContent");
-
-const SessionStorage = require("./app/storage/session");
 
 // initialize routes for the application
 const router = new Router();
@@ -78,16 +75,15 @@ const server = http.createServer(async (req, res) => {
       // initialize controllers
       container.set(ArticleController, [
         container.get(Client),
-        container.get(ArticleService),
+        container.get(ArticleService)
       ]);
       container.set(AuthController, [
         container.get(Client),
-        container.get(UserService),
-        container.get(SessionStorage),
+        container.get(UserService)
       ]);
       container.set(HomeController, [
         container.get(Client),
-        container.get(ArticleService),
+        container.get(ArticleService)
       ]);
       container.set(NotFoundController, [container.get(Client)]);
 

@@ -9,18 +9,9 @@ class ConnectionMySQL {
     console.log("Connection to SQL database established");
   }
 
-  // open() {
-  //   this.pool.connect((err) => {
-  //     if (err) {
-  //       return console.error("error:" + err.message);
-  //     }
-  //   });
-  // }
-
   async query(sqlQuery) {
     return await this.promisePool.query(sqlQuery)
       .then((results) => {
-        //console.log("results: ", results[0]);
         return results[0];
       })
       .catch((err) => {
@@ -39,3 +30,13 @@ class ConnectionMySQL {
 }
 
 module.exports = ConnectionMySQL;
+
+  // open() {
+  //   this.pool.connect((err) => {
+  //     if (err) {
+  //       return console.error("error:" + err.message);
+  //     }
+  //   });
+  // }
+
+  //console.log("results: ", results[0]);

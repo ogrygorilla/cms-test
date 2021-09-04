@@ -16,7 +16,7 @@ class UserRepository {
         `;
     const result = await this.connection.query(sql);
     console.log("add user: ", result);
-    return "userId here";
+    return;
   }
 
   async getByField(field, value) {

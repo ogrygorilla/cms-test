@@ -20,7 +20,3 @@ class Container {
 }
 
 module.exports = Container;
-
-// if (typeof this.dependencies[key] === "function") {
-//   this.dependencies[key] = this.dependencies[key]().bind(this);
-// }
