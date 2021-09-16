@@ -3,9 +3,13 @@
     /* layout */
     /* max-width: 800px; */
     width: min(95%, 800px);
-    margin-top: min(2.5%, 2.5vh);
+    position: absolute;
+    margin-top: calc(7em + 20px);
+    /* padding-bottom: 7em; */
+    z-index: 1;
     background-color: white;
     box-shadow: 5px 5px 10px 0px lightgray;
+
 
     /* flexing input fields*/
     display: flex;
@@ -15,18 +19,68 @@
     /* positioning self */
     align-self: center;
 }
-#createArticleForm label {
+
+/* editor buttons */
+.content-header {
+    width: 90%;
     margin-top: min(2.5%, 2.5vh);
-    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
-#createArticleForm .input {
-    width: 90%;
+.editor-buttons-wrapper {
+    /* width: 15em; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.editor-buttons-wrapper button{
+    width: 2.5em;
+    height: 2.5em;
+    padding: 0.5em;
+
+    border-style: hidden;
+    font-size: 1em;
+    color: gray;
+    background-color: lightgray;
+    /* border-radius: 5px; */
+}
+.editor-buttons-wrapper button:hover{
+    color: white;
+    background-color: gray;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-#createArticleForm textarea{
+#editor-button-hx *{
+    font-family: Georgia, 'Times New Roman', Times, serif !important;
+    font-size: 1.3em;
+}
+
+#createArticleForm label:first-of-type{
+    width: 90%;
+    margin-top: min(2.5%, 2.5vh);
+}
+#createArticleForm .input {
+    padding: 0.5em;
+    width: 90%;
+    border: solid;
+    border-width: 1px;
+    border-color: #BBBBBB;
+    border-radius: 3px;
+}
+
+#contentTextArea {
+    padding: 0.5em;
     height: 500px;
     resize: none;
     overflow: auto;
+    border: solid;
+    border-width: 1px;
+    border-color: #BBBBBB;
+    border-radius: 3px;
 }
 
 .preview-submit {
@@ -50,4 +104,11 @@
     border-radius: 5px;
     width: 20%;
     height: 100%;
+}
+
+.preview-submit button:hover{
+    color: white;
+    background-color: gray;
+    font-weight: bold;
+    cursor: pointer;
 }

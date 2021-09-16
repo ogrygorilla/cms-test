@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3MS Home</title>
+  <title>3CMS Home</title>
   <link href="http://localhost/img/cms_projekt/fe-header.css" rel="stylesheet" type="text/css">
   <link href="http://localhost/img/cms_projekt/fe-home.css" rel="stylesheet" type="text/css">
   <script async src="http://localhost/img/cms_projekt/fe-header.js"></script>
@@ -69,14 +69,14 @@
   </nav>
 
   <div class="articles" id="articlesDiv">
-    <article class="article-preview">
-      <h2>Title</h2>
-      <div class="author-date">
-        <a href="/author" rel="author">Author</a>
-        <time datetime="2021-08-25">25.08.2021</time>
-      </div>
-      <p class="content-preview">Content</p>
-    </article>
+    <!-- inserted with javascript, looks like this:
+          <article class="article-preview" id="article${article._id}" onclick="location.href='/article/${article._id}';">
+            <a href="/article/${article._id}">
+              <h2>${article.title}</h2>
+            </a>
+            <p class="content-preview">${article.content}</p>
+          </article>
+    -->
   </div>
 </body>
 

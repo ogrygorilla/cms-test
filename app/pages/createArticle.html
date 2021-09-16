@@ -7,6 +7,7 @@
     <title>3CMS Create</title>
     <link href="http://localhost/img/cms_projekt/fe-header.css" rel="stylesheet" type="text/css">
     <link href="http://localhost/img/cms_projekt/fe-create.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script async src="http://localhost/img/cms_projekt/fe-header.js"></script>
     <script async src="http://localhost/img/cms_projekt/fe-create.js"></script>
   </head>
@@ -73,14 +74,53 @@
         type="text"
         placeholder="The Title of your Article..."
       />
-      <label for="contentTextArea">Content</label>
-      <textarea
+      <div class="content-header">
+        <label for="contentTextArea">Content</label>
+        <div class="editor-buttons-wrapper">
+          <button class="editor-button" type="button" data-format="bold">
+            <i class="material-icons">&#xe238;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="italic">
+            <i class="material-icons">&#xe23f;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="underline">
+            <i class="material-icons">&#xe249;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="insertUnorderedList">
+            <i class="material-icons">&#xe241;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="insertOrderedList">
+            <i class="material-icons">&#xe242;</i>
+          </button>
+          <button class="editor-button" id="editor-button-hx" type="button" data-format="formatBlock">
+            <strong>H</strong>
+          </button>
+          <button class="editor-button" type="button" data-format="justifyLeft">
+            <i class="material-icons">&#xe236;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="justifyCenter">
+            <i class="material-icons">&#xe234;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="justifyRight">
+            <i class="material-icons">&#xe237;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="justifyFull">
+            <i class="material-icons">&#xe235;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="createlink">
+            <i class="material-icons">&#xe250;</i>
+          </button>
+        </div>
+
+      </div>
+      <div
+        contenteditable="true"
         id="contentTextArea"
         class="input"
         type="password"
         placeholder="Start writing your Content here.."
       >
-      </textarea>
+    </div>
       <div class="preview-submit">
         <button id="previewArticleButton" type="submit">Preview</button>
         <button id="createArticleButton" type="submit">Submit</button>

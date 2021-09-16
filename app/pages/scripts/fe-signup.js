@@ -19,7 +19,25 @@ window.addEventListener("load", function() {
         email2 = document.getElementById("emailInputrepeat");
         pw = document.getElementById("passwordInput");
 
-        if (email1.value == ""){
+        if (!email1.value.includes("@") || !email1.value.includes(".") || email1.value.lastIndexOf(".") < email1.value.search("@")){
+            email1.value ="";
+            email1.placeholder = "Email Address not valid!";
+            email1.style.setProperty("--mail-placeholder-color", "darkorange");
+            email1.addEventListener("click", function(){
+                email1.placeholder = "Email Address";
+                email1.style.setProperty("--mail-placeholder-color", "gray");
+            });
+        }
+        else if (!email2.value.includes("@") || !email2.value.includes(".") || email2.value.lastIndexOf(".") < email2.value.search("@")){
+            email2.value ="";
+            email2.placeholder = "Email Address not valid!";
+            email2.style.setProperty("--mail-placeholder-color", "darkorange");
+            email2.addEventListener("click", function(){
+                email2.placeholder = "Email Address";
+                email2.style.setProperty("--mail-placeholder-color", "gray");
+            });
+        }
+        else if (email1.value == ""){
             email1.placeholder = "Email Address can not be empty!";
             email1.style.setProperty("--mail-placeholder-color", "darkorange");
             email1.addEventListener("click", function(){

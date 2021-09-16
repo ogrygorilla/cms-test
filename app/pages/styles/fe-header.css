@@ -16,15 +16,20 @@
     /* border-box, damit child elemente nciht über die grenze von parent gehen */
     box-sizing: border-box;
     margin: 0;
-    padding: 0;
+    /* padding: 0; */
     font-family: "Montserrat", sans-serif;
   }
   
+  .header *{
+    padding: 0;
+  }
+
   body {
     height: 100vh;
     display: flex;
     flex-direction: column;
     background: #f9faff;
+    scrollbar-gutter: auto;
   }
   
   /*
@@ -35,12 +40,16 @@
   .header {
     background: black;
     padding: 5px;
+    z-index: 2;
+    position: fixed;
+    /* top: 0; */
+    width: 100%;
   }
 
   nav li, nav a, nav li a {
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 1.5rem;
     color: #BBBBBB;
     text-decoration: none;
     height: fit-content;
@@ -156,10 +165,10 @@
   /* Tablet navigation */
   @media all and (min-width: 600px) {
      /* rearranger items to fit */
-    .logo-li {order: 1;}
+    /* .logo-li {order: 1;}
     #toggle {order: 0;}
     .navigation-profile {order: 2;}
-    .navigation-primary {order: 3;}
+    .navigation-primary {order: 3;} */
   } 
 
   /* Desktop navigation */
@@ -249,7 +258,7 @@
   
   /* class for hiding elements */
   .hide {
-    display: none;
+    display: none !important;
   }
 
 

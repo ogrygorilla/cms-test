@@ -26,6 +26,9 @@ window.addEventListener("load", function() {
   .then(async (res) => {
     // convert res variable to json format
     const resData = await res.json();
+
+    // reverse resData: new articles are at the top of home page.
+    resData.reverse();
     // if resData exists
     if (!!resData) {
       // save all articles in browser local storage to have the possibility
@@ -41,7 +44,7 @@ window.addEventListener("load", function() {
       resData.forEach((article) => {
         console.log(article);
         article = `
-          <article class="article-preview" id="article${article._id}">
+          <article class="article-preview" id="article${article._id}" onclick="location.href='/article/${article._id}';">
             <a href="/article/${article._id}">
               <h2>${article.title}</h2>
             </a>

@@ -13,7 +13,7 @@ window.addEventListener("load", function() {
 
     const data = {
       title: e.target.querySelector("#titleInput").value,
-      content: e.target.querySelector("#contentTextArea").value,
+      content: e.target.querySelector("#contentTextArea").innerHTML,
       author: userId,
     };
 
@@ -37,8 +37,34 @@ window.addEventListener("load", function() {
         // show alert/toast message or validation hints under inputs with purpose to try again
       }
       // localStorage.set("userId", data.userId); setItem(), getItem(), removeItem(), clear()
+      setTimeout(function(){window.location.assign("/");}, 1000);
+      
     });
   };
+
+  // Editor Functionality, with execCommand [deprecated!!!]
+
+  var contentText = document.getElementById('contentTextArea');
+  var editorButtons = document.getElementsByClassName('editor-button');
+  for (let editorButton of editorButtons) {
+    editorButton.addEventListener('click', function() {
+      var format = editorButton.dataset['format'];
+      if(format === 'createlink') {
+        let url = prompt("Enter the link here: ", "http:\/\/");
+        if (url === null){
+          return;
+        }
+        else{
+          document.execCommand(format, false, url);
+        };
+      } else {
+        document.execCommand(format, false, null);
+      }
+    })
+  }
+
+  // document.execCommand('formatBlock', false, tagName);
+
 });
 
 window.onerror = async (err) => {

@@ -101,6 +101,7 @@
     color: white;
     background-color: gray;
     font-weight: bold;
+    cursor: pointer;
   }
 
   /* tablet view */

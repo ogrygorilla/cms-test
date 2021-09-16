@@ -1,0 +1,106 @@
+/* Standard view := mobile */
+
+.article-wrapper {
+  /* layout */
+  /* max-width: 800px; */
+  width: min(95%, 800px);
+  position: absolute;
+  margin-top: calc(7em + 20px);
+  padding-bottom: 7em;
+  z-index: 1;
+
+  /* positioning self */
+  align-self: center;
+}
+
+.article-wrapper-inner > div {
+  width: 90%;
+  padding-top: 2.5%;
+}
+
+.article-wrapper-inner {
+  /* flexing article and edit*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  padding-bottom: 5%;
+  /* border-radius: 20px;  */
+  box-shadow: 5px 5px 10px 0px lightgray;
+
+  /* color/style */
+  background: #fff;
+  border: 1px solid #e1e2f0;
+  color: #3a3c47;
+}
+
+#articleDiv p {
+  line-height: 1.5em;
+}
+
+#editButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 5%;
+  font-size: 1.5rem;
+}
+
+#editButtons button,
+.discard-submit button {
+  width: 25%;
+  text-align: center;
+  font-size: 1.5rem;
+  height: 2em;
+  appearance: none;
+  border-style: hidden;
+  color: gray;
+  background-color: lightgray;
+  border-radius: 5px;
+}
+
+#editButtons button:hover,
+.discard-submit button:hover {
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+#editToggle:hover,
+#discardEditButton:hover {
+  background-color: gray;
+}
+#deleteArticleButton:hover,
+#editArticleButton:hover {
+  background-color: darkorange;
+}
+
+#editArticleForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+#editArticleForm label {
+  margin-top: min(2.5%, 2.5vh);
+}
+#editArticleForm input {
+    padding: 0.5em;
+  width: 100%;
+}
+#editArticleContentTextArea {
+    padding: 0.5em;
+  height: 500px;
+  width: 100%;
+  line-height: 1.5em;
+}
+
+.discard-submit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: min(2.5%, 2.5vh);
+}
