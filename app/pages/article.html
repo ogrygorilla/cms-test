@@ -7,6 +7,7 @@
     <title>3CMS - Artikeltitel</title>
     <link href="http://localhost/img/cms_projekt/fe-header.css" rel="stylesheet" type="text/css">
     <link href="http://localhost/img/cms_projekt/fe-article.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script async src="http://localhost/img/cms_projekt/fe-header.js"></script>
     <script async src="http://localhost/img/cms_projekt/fe-article.js"></script>
   </head>
@@ -82,21 +83,79 @@
             </div>
             -->
         </div>
+
         <div id="editArticleDiv" class="hide">
           <form id="editArticleForm">
             <label for="editArticleTitleInput">Title</label>
             <input
               id="editArticleTitleInput"
+              class="input"
               type="text"
-              placeholder="Please enter the title of article here..."
-            ></input>
-            <label for="editArticleContentTextArea">Content</label>
-            <textarea
+              placeholder="The Title of your Article..."
+            />
+            <div class="content-header">
+              <label for="editArticleContentTextArea">Content</label>
+              <div class="editor-buttons-wrapper">
+                <button class="editor-button" type="button" data-format="bold">
+                  <i class="material-icons">&#xe238;</i>
+                </button>
+                <button class="editor-button" type="button" data-format="italic">
+                  <i class="material-icons">&#xe23f;</i>
+                </button>
+                <button class="editor-button" type="button" data-format="underline">
+                  <i class="material-icons">&#xe249;</i>
+                </button>
+                <button class="editor-button" type="button" data-format="insertUnorderedList">
+                  <i class="material-icons">&#xe241;</i>
+                </button>
+                <button class="editor-button" type="button" data-format="insertOrderedList">
+                  <i class="material-icons">&#xe242;</i>
+                </button>
+                <div id="editor-button-hx">
+                  <button id="hx-caption" type="button">H</button>         
+                  <button class="headline-buttons" type="button" data-format="formatBlock" data-param="h2">
+                    h2
+                  </button>
+                  <button class="headline-buttons" type="button" data-format="formatBlock" data-param="h3">
+                    h3
+                  </button>
+                  <button class="headline-buttons" type="button" data-format="formatBlock" data-param="h4">
+                    h4
+                  </button>
+                  <button class="headline-buttons" type="button" data-format="formatBlock"  data-param="h5">
+                    h5
+                  </button>
+                  <button class="headline-buttons" type="button" data-format="formatBlock"  data-param="h6">
+                    h6
+                  </button>
+                </div>
+      
+                <button class="editor-button" type="button" data-format="justifyLeft">
+                  <i class="material-icons">&#xe236;</i>
+                </button>
+                <button class="editor-button" type="button" data-format="justifyCenter">
+                  <i class="material-icons">&#xe234;</i>
+                </button>
+                <button class="editor-button" type="button" data-format="justifyRight">
+                  <i class="material-icons">&#xe237;</i>
+                </button>
+                <button class="editor-button" type="button" data-format="justifyFull">
+                  <i class="material-icons">&#xe235;</i>
+                </button>
+                <button class="editor-button" type="button" data-format="createlink">
+                  <i class="material-icons">&#xe250;</i>
+                </button>
+              </div>
+      
+            </div>
+            <div
+              contenteditable="true"
               id="editArticleContentTextArea"
+              class="input"
               type="password"
-              placeholder="Please enter your content here..."
+              placeholder="Start writing your Content here.."
             >
-          </textarea>
+            </div>
             <div class="discard-submit">
               <button id="discardEditButton" type="button">
                 Cancel
@@ -105,6 +164,7 @@
                 Save
               </button>
             </div>
+        </div> 
           </form>
         </div>
       </div>

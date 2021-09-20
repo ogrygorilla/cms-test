@@ -23,7 +23,7 @@ window.addEventListener("load", function() {
     // change Profile Picture and add Logout link
     document.querySelector(".profile-picture").src =
       "http://localhost/img/cms_projekt/test_profile_avatar_200px.jpg";
-    document.querySelector("#profile-link").href="/profile";
+    document.querySelector("#profile-link").href="/";
 
     // Handler for case if signout button is clicked
     signoutItem[0].addEventListener("click", logout); 

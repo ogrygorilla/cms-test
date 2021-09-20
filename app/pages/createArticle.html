@@ -92,9 +92,25 @@
           <button class="editor-button" type="button" data-format="insertOrderedList">
             <i class="material-icons">&#xe242;</i>
           </button>
-          <button class="editor-button" id="editor-button-hx" type="button" data-format="formatBlock">
-            <strong>H</strong>
-          </button>
+          <div id="editor-button-hx">
+            <button id="hx-caption" type="button">H</button>         
+            <button class="headline-buttons" type="button" data-format="formatBlock" data-param="h2">
+              h2
+            </button>
+            <button class="headline-buttons" type="button" data-format="formatBlock" data-param="h3">
+              h3
+            </button>
+            <button class="headline-buttons" type="button" data-format="formatBlock" data-param="h4">
+              h4
+            </button>
+            <button class="headline-buttons" type="button" data-format="formatBlock"  data-param="h5">
+              h5
+            </button>
+            <button class="headline-buttons" type="button" data-format="formatBlock"  data-param="h6">
+              h6
+            </button>
+          </div>
+
           <button class="editor-button" type="button" data-format="justifyLeft">
             <i class="material-icons">&#xe236;</i>
           </button>
@@ -122,7 +138,7 @@
       >
     </div>
       <div class="preview-submit">
-        <button id="previewArticleButton" type="submit">Preview</button>
+        <!-- <button id="previewArticleButton" type="submit">Preview</button> -->
         <button id="createArticleButton" type="submit">Submit</button>
       </div>
     </form>

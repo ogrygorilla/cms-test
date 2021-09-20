@@ -93,8 +93,30 @@ window.addEventListener("load", function() {
     editButtons.classList.add("hide");
     articleDiv.classList.add("hide");
     editArticleTitleInput.value = articleData.title;
-    editArticleContentTextArea.value = articleData.content;
+    editArticleContentTextArea.innerHTML = articleData.content;
   };
+
+  // Editor Functionality, with execCommand [deprecated!!!]
+  var editorButtons = document.querySelectorAll(".editor-button,.headline-buttons");
+  for (let editorButton of editorButtons) {
+    editorButton.addEventListener('click', function() {
+      var format = editorButton.dataset['format'];
+      var formatParam = editorButton.dataset['param'];
+      if(format === 'createlink') {
+        let url = prompt("Enter the link here: ", "http:\/\/");
+        if (url === null){
+          return;
+        }
+        else{
+          document.execCommand(format, false, url);
+        };
+      } else if(format === 'formatBlock') {
+        document.execCommand(format, false,'<' + formatParam + '>');
+      } else {
+        document.execCommand(format, false, null);
+      }
+    })
+  }
 
   discardEditButton.onclick = async (e) => {
     window.location.assign("/article/"+articleId);
@@ -106,7 +128,7 @@ window.addEventListener("load", function() {
     const data = {
       _id: articleData._id,
       title: e.target.querySelector("#editArticleTitleInput").value,
-      content: e.target.querySelector("#editArticleContentTextArea").value,
+      content: e.target.querySelector("#editArticleContentTextArea").innerHTML,
       author: userId,
     };
 
@@ -136,11 +158,11 @@ window.addEventListener("load", function() {
       //window.alert(resData.message);
 
       editArticleTitleInput.value = "";
-      editArticleContentTextArea.value = "";
+      editArticleContentTextArea.innerHTML = "";
 
       // localStorage.set("userId", data.userId); setItem(), getItem(), removeItem(), clear()
 
-      setTimeout(function(){window.location.assign("/article/"+articleId);}, 1000);
+      setTimeout(function(){window.location.assign("/");}, 1000);
     });
   };
 

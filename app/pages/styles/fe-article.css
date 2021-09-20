@@ -35,6 +35,80 @@
   color: #3a3c47;
 }
 
+/* editor buttons */
+.content-header {
+  width: 100%;
+  margin-top: min(2.5%, 2.5vh);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.editor-buttons-wrapper {
+  /* width: 15em; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.editor-buttons-wrapper > button, 
+.editor-buttons-wrapper div{
+  width: 2.5em;
+  height: 2.5em;
+  padding: 0.5em;
+
+  border-style: hidden;
+  font-size: 1em;
+  color: gray;
+  background-color: lightgray;
+  /* border-radius: 5px; */
+}
+.editor-buttons-wrapper button:hover{
+  color: white;
+  background-color: gray;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#editor-button-hx {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   
+}
+
+#hx-caption {
+  border-style: hidden;
+  color:gray;
+  background: lightgray;
+list-style: none;
+  font-family: Georgia, 'Times New Roman', Times, serif !important;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.headline-buttons {
+  border-style: hidden;
+  color:gray;
+  background: lightgray;
+  width: 2.5em;
+visibility: hidden;
+position: relative;
+  display: none;
+  z-index: 3;
+  clear: both;
+  font-size: 1em;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+}
+
+#editor-button-hx:hover > button.headline-buttons{
+  visibility: visible;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #articleDiv p {
   line-height: 1.5em;
 }
@@ -95,6 +169,7 @@
   height: 500px;
   width: 100%;
   line-height: 1.5em;
+  overflow: scroll;
 }
 
 .discard-submit {

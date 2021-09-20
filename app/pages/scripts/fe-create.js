@@ -43,12 +43,12 @@ window.addEventListener("load", function() {
   };
 
   // Editor Functionality, with execCommand [deprecated!!!]
-
   var contentText = document.getElementById('contentTextArea');
-  var editorButtons = document.getElementsByClassName('editor-button');
+  var editorButtons = document.querySelectorAll(".editor-button,.headline-buttons");
   for (let editorButton of editorButtons) {
     editorButton.addEventListener('click', function() {
       var format = editorButton.dataset['format'];
+      var formatParam = editorButton.dataset['param'];
       if(format === 'createlink') {
         let url = prompt("Enter the link here: ", "http:\/\/");
         if (url === null){
@@ -57,6 +57,8 @@ window.addEventListener("load", function() {
         else{
           document.execCommand(format, false, url);
         };
+      } else if(format === 'formatBlock') {
+        document.execCommand(format, false,'<' + formatParam + '>');
       } else {
         document.execCommand(format, false, null);
       }
