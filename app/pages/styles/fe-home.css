@@ -1,0 +1,66 @@
+/* Standard view := mobile */
+.articles {
+    /* layout */
+    /* max-width: 800px; */
+    width: min(95%, 800px);
+    position: absolute;
+    margin-top: 7em;
+    padding-bottom: 7em;
+    z-index: 1;
+
+    /* flexing articles*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    /* positioning self */
+    align-self:center;
+}
+
+.article-preview {
+    display: flex;
+    flex-direction: column;
+
+    /* layout */
+    width: 100%;
+    margin-top: min(2.5%, 2.5vh);
+
+    /* color/style */
+    background: #fff;
+    color: #3a3c47;
+    border: 1px solid #e1e2f0;
+    /* border-radius: 20px;  */
+    box-shadow: 5px 5px 10px 0px lightgray;
+}
+
+.article-preview:hover {
+    box-shadow: 5px 5px 10px 0px rgba(255, 140, 0, 0.5);
+    border: 1px solid rgba(255, 140, 0, 0.5);
+    cursor: pointer;
+}
+
+.article-preview a{
+    text-decoration: none;
+    color:#3a3c47;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+
+}            
+
+.article-preview {
+    padding: 2.5%;
+}
+.article-preview div, .article-preview p {
+    margin-top: 1%;
+}
+
+/* https://css-tricks.com/line-clampin/ */
+.content-preview{
+    line-height: 1.5em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;  
+}

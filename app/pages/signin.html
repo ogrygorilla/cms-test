@@ -4,90 +4,84 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CMS_System</title>
+    <title>3CMS Login</title>
+    <link href="http://localhost/img/cms_projekt/fe-header.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/img/cms_projekt/fe-login.css" rel="stylesheet" type="text/css">
+    <script async src="http://localhost/img/cms_projekt/fe-header.js"></script>
+    <script async src="http://localhost/img/cms_projekt/fe-signin.js"></script>
   </head>
   <body>
-    <h1>Sign In Form</h1>
-    <nav>
-      <ul>
-        <li id="homePageLink">
-          <a href="/">Home Page</a>
+    
+    <nav class="header">
+      <ul class="navigation">
+        <li class="logo-li">
+          <a class="img-link" href="/">
+            <img class="logo" src="http://localhost/img/cms_projekt/logo.svg"></img>
+            <img class="logo" src="http://localhost/img/cms_projekt/logo_hover.svg"></img>
+          </a>
         </li>
+        <ul class="navigation-primary">
+          <li class="navlink">
+            <a href="/">Browse</a>
+          </li>
+          <li class="navlink">
+            <a href="/">Guide</a>
+          </li>
+          <li class="navlink ussign hide">
+            <a href="/article/create">Create</a>
+          </li>
+          <li class="ussign">
+            <a href="/signin">Log In</a>
+          </li>
+          <li class="ussign">
+            <a href="/signup">Sign Up</a>
+          </li>
+          <li class="ussign logout hide">
+            <a href="/">Sign Out</a>
+          </li>
+        </ul>
+        <ul class="navigation-profile">
+          <ul class="navigation-secondary">
+            <li class="ussign button primary">
+              <a href="/signin">Log In</a>
+            </li>
+            <li class="ussign button secondary">
+              <a href="/signup">Sign Up</a>
+            </li>
+            <li class="ussign logout hide button third">
+              <a href="/">Sign Out</a>
+            </li>
+          </ul>
+          <li id="profile">
+            <a class="img-link" id="profile-link" href="/signin">
+              <img class="profile-picture" src="http://localhost/img/cms_projekt/profile_icon.svg"><img>
+            </a>
+          </li>
+        </ul>
+        <li id="toggle">
+          <a href="#">
+            &#x2630
+          </a>
+        </li >
       </ul>
     </nav>
-    <form id="signinForm">
-      <label for="emailInput">Email</label>
-      <input
-        id="emailInput"
-        type="text"
-        placeholder="Please enter your email here..."
-      />
-      <label for="passwordInput">Password</label>
-      <input
-        id="passwordInput"
-        type="password"
-        placeholder="Please enter your password here..."
-      />
-      <button id="signUpButton" type="submit">Sign In</button>
-    </form>
-
-    <script>
-      window.onload = async (e) => {
-        console.log(window.location.pathname);
-        
-        const signupForm = document.getElementById("signinForm");
-        // const signUpButton = document.getElementById("signUpButton");
-        // const emailInput = document.getElementById("emailInput");
-        // const passwordInput = document.getElementById("passwordInput");
-
-        // const data = {
-        //   email: "Serg@mail.ru",
-        //   password: "test",
-        // };
-
-        signupForm.onsubmit = async (e) => {
-          e.preventDefault();
-
-          const data = {
-            email: e.target.querySelector("#emailInput").value,
-            password: e.target.querySelector("#passwordInput").value,
-          };
-
-          console.log(data);
-
-          fetch("/signin", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-          .then(async (res) => {
-            const resData = await res.json();
-            console.log("data in signIn page: ", resData);
-            if (!!resData && !!resData.userId) {
-              localStorage.setItem("userId", resData.userId);
-              window.alert(`Welcome ! userId: ${resData.userId}`);
-              window.location.href = "/";
-              // redirect to dashboard or something i.e. createArticle page/hint
-            } else if (resData.message) {
-              console.log("error in signIn page: ", resData.message);
-              // show alert/toast message or validation hints under inputs with purpose to try again
-            }
-            // localStorage.set("userId", data.userId); setItem(), getItem(), removeItem(), clear()
-          });
-        };
-      };
-
-      window.onerror = async (err) => {
-        console.log("Error from window: ", err);
-      };
-    </script>
+    
+    <div class="login-wrapper">
+      <div class="login-header">
+        <h1>Login</h1>
+        <a href="/signup">Sign Up</a>
+      </div>
+      <form id="login-form">
+        <div id="flexhelper"></div>
+        <div class="login-row">
+          <!-- <label for="emailInput">Email</label> -->
+          <input id="emailInput" type="text" placeholder="Email Address"/>
+          <!-- <label for="passwordInput">Password</label> -->
+          <input id="passwordInput" type="password" placeholder="Password"/>
+        </div>
+        <button id="loginButton" type="submit">Login</button>
+      </form>
+    </div>
   </body>
 </html>
 
-<style type="text/css">
-  body {
-    background: yellow;
-  }
-</style>

@@ -1,0 +1,181 @@
+/* Standard view := mobile */
+
+.article-wrapper {
+  /* layout */
+  /* max-width: 800px; */
+  width: min(95%, 800px);
+  position: absolute;
+  margin-top: calc(7em + 20px);
+  padding-bottom: 7em;
+  z-index: 1;
+
+  /* positioning self */
+  align-self: center;
+}
+
+.article-wrapper-inner > div {
+  width: 90%;
+  padding-top: 2.5%;
+}
+
+.article-wrapper-inner {
+  /* flexing article and edit*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  padding-bottom: 5%;
+  /* border-radius: 20px;  */
+  box-shadow: 5px 5px 10px 0px lightgray;
+
+  /* color/style */
+  background: #fff;
+  border: 1px solid #e1e2f0;
+  color: #3a3c47;
+}
+
+/* editor buttons */
+.content-header {
+  width: 100%;
+  margin-top: min(2.5%, 2.5vh);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.editor-buttons-wrapper {
+  /* width: 15em; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.editor-buttons-wrapper > button, 
+.editor-buttons-wrapper div{
+  width: 2.5em;
+  height: 2.5em;
+  padding: 0.5em;
+
+  border-style: hidden;
+  font-size: 1em;
+  color: gray;
+  background-color: lightgray;
+  /* border-radius: 5px; */
+}
+.editor-buttons-wrapper button:hover{
+  color: white;
+  background-color: gray;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#editor-button-hx {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   
+}
+
+#hx-caption {
+  border-style: hidden;
+  color:gray;
+  background: lightgray;
+list-style: none;
+  font-family: Georgia, 'Times New Roman', Times, serif !important;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.headline-buttons {
+  border-style: hidden;
+  color:gray;
+  background: lightgray;
+  width: 2.5em;
+visibility: hidden;
+position: relative;
+  display: none;
+  z-index: 3;
+  clear: both;
+  font-size: 1em;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+}
+
+#editor-button-hx:hover > button.headline-buttons{
+  visibility: visible;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#articleDiv p {
+  line-height: 1.5em;
+}
+
+#editButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 5%;
+  font-size: 1.5rem;
+}
+
+#editButtons button,
+.discard-submit button {
+  width: 25%;
+  text-align: center;
+  font-size: 1.5rem;
+  height: 2em;
+  appearance: none;
+  border-style: hidden;
+  color: gray;
+  background-color: lightgray;
+  border-radius: 5px;
+}
+
+#editButtons button:hover,
+.discard-submit button:hover {
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+#editToggle:hover,
+#discardEditButton:hover {
+  background-color: gray;
+}
+#deleteArticleButton:hover,
+#editArticleButton:hover {
+  background-color: darkorange;
+}
+
+#editArticleForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+#editArticleForm label {
+  margin-top: min(2.5%, 2.5vh);
+}
+#editArticleForm input {
+    padding: 0.5em;
+  width: 100%;
+}
+#editArticleContentTextArea {
+    padding: 0.5em;
+  height: 500px;
+  width: 100%;
+  line-height: 1.5em;
+  overflow: scroll;
+}
+
+.discard-submit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: min(2.5%, 2.5vh);
+}

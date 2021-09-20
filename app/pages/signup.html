@@ -4,78 +4,89 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CMS_System</title>
+    <title>3CMS SignUp</title>
+    <link href="http://localhost/img/cms_projekt/fe-header.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/img/cms_projekt/fe-signup.css" rel="stylesheet" type="text/css">
+    <script async src="http://localhost/img/cms_projekt/fe-header.js"></script>
+    <script async src="http://localhost/img/cms_projekt/fe-signup.js"></script>
   </head>
   <body>
-    <h1>Sign up Form</h1>
-    <nav>
-      <ul>
-        <li id="homePageLink">
-          <a href="/">Home Page</a>
+
+    <nav class="header">
+      <ul class="navigation">
+        <li class="logo-li">
+          <a class="img-link" href="/">
+            <img class="logo" src="http://localhost/img/cms_projekt/logo.svg"></img>
+            <img class="logo" src="http://localhost/img/cms_projekt/logo_hover.svg"></img>
+          </a>
         </li>
+        <ul class="navigation-primary">
+          <li class="navlink">
+            <a href="/">Browse</a>
+          </li>
+          <li class="navlink">
+            <a href="/">Guide</a>
+          </li>
+          <li class="navlink ussign hide">
+            <a href="/article/create">Create</a>
+          </li>
+          <li class="ussign">
+            <a href="/signin">Log In</a>
+          </li>
+          <li class="ussign">
+            <a href="/signup">Sign Up</a>
+          </li>
+          <li class="ussign logout hide">
+            <a href="/">Sign Out</a>
+          </li>
+        </ul>
+        <ul class="navigation-profile">
+          <ul class="navigation-secondary">
+            <li class="ussign button primary">
+              <a href="/signin">Log In</a>
+            </li>
+            <li class="ussign button secondary">
+              <a href="/signup">Sign Up</a>
+            </li>
+            <li class="ussign logout hide button third">
+              <a href="/">Sign Out</a>
+            </li>
+          </ul>
+          <li id="profile">
+            <a class="img-link" id="profile-link" href="/signin">
+              <img class="profile-picture" src="http://localhost/img/cms_projekt/profile_icon.svg"><img>
+            </a>
+          </li>
+        </ul>
+        <li id="toggle">
+          <a href="#">
+            &#x2630
+          </a>
+        </li >
       </ul>
     </nav>
-    <form id="signupForm">
-      <label for="emailInput">Email</label>
-      <input
-        id="emailInput"
-        type="text"
-        placeholder="Please enter your email here..."
-      />
-      <label for="passwordInput">Password</label>
-      <input
-        id="passwordInput"
-        type="password"
-        placeholder="Please enter your password here..."
-      />
-      <button id="signUpButton" type="submit">Sign Up</button>
-    </form>
 
-    <script>
-      window.onload = async (e) => {
-        const signupForm = document.getElementById("signupForm");
-        // const signUpButton = document.getElementById("signUpButton");
-        // const emailInput = document.getElementById("emailInput");
-        // const passwordInput = document.getElementById("passwordInput");
-
-        // const data = {
-        //   email: "Serg@mail.ru",
-        //   password: "test",
-        // };
-
-        signupForm.onsubmit = async (e) => {
-          e.preventDefault();
-
-          const data = {
-            email: e.target.querySelector("#emailInput").value,
-            password: e.target.querySelector("#passwordInput").value,
-          };
-
-          console.log(data);
-
-          const res = await fetch("/signup", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          });
-          console.log("response in signUp page: ", res);
-          const resData = await res.json();
-          console.log("data in signUp page: ", resData);
-          window.location.href = "/";
-        };
-      };
-
-      window.onerror = async (err) => {
-        console.log("Error from window: ", err);
-      };
-    </script>
+    <div class="signup-wrapper">
+      <div class="signup-header">
+        <a href="/signin">Login</a>
+        <h1>Sign Up</h1>
+      </div>
+      <div id="success-message" class="hide">
+        <p>SignUp successful!</p>
+        <p>Switch to <a href="/signin">Login</a></p>
+      </div>
+      <form id="signupForm">
+        <div id="flexhelper"></div>
+        <div id="signup-row">
+          <!-- <label for="emailInput">Email</label> -->
+          <input id="emailInput" type="text" placeholder="Email Address"/>
+          <input id="emailInputrepeat" type="text" placeholder="Repeat Email Address"/>
+          <!-- <label for="passwordInput">Password</label> -->
+          <input id="passwordInput" type="password" placeholder="Password"/>
+        </div>
+          <button id="signUpButton" type="submit">Sign Up</button>
+      </form>
+    </div>
   </body>
 </html>
 
-<style type="text/css">
-  body {
-    background: yellow;
-  }
-</style>

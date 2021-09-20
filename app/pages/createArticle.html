@@ -4,84 +4,144 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CMS_System</title>
+    <title>3CMS Create</title>
+    <link href="http://localhost/img/cms_projekt/fe-header.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost/img/cms_projekt/fe-create.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script async src="http://localhost/img/cms_projekt/fe-header.js"></script>
+    <script async src="http://localhost/img/cms_projekt/fe-create.js"></script>
   </head>
   <body>
-    <h1>Create Article Page</h1>
-    <nav>
-      <ul>
-        <li id="homePageLink">
-          <a href="/">Home Page</a>
+    <nav class="header">
+      <ul class="navigation">
+        <li class="logo-li">
+          <a class="img-link" href="/">
+            <img class="logo" src="http://localhost/img/cms_projekt/logo.svg"></img>
+            <img class="logo" src="http://localhost/img/cms_projekt/logo_hover.svg"></img>
+          </a>
         </li>
+        <ul class="navigation-primary">
+          <li class="navlink">
+            <a href="/">Browse</a>
+          </li>
+          <li class="navlink">
+            <a href="/">Guide</a>
+          </li>
+          <li class="navlink ussign hide">
+            <a href="/article/create">Create</a>
+          </li>
+          <li class="ussign">
+            <a href="/signin">Log In</a>
+          </li>
+          <li class="ussign">
+            <a href="/signup">Sign Up</a>
+          </li>
+          <li class="ussign logout hide">
+            <a href="/">Sign Out</a>
+          </li>
+        </ul>
+        <ul class="navigation-profile">
+          <ul class="navigation-secondary">
+            <li class="ussign button primary">
+              <a href="/signin">Log In</a>
+            </li>
+            <li class="ussign button secondary">
+              <a href="/signup">Sign Up</a>
+            </li>
+            <li class="ussign logout hide button third">
+              <a href="/">Sign Out</a>
+            </li>
+          </ul>
+          <li id="profile">
+            <a class="img-link" id="profile-link" href="/signin">
+              <img class="profile-picture" src="http://localhost/img/cms_projekt/profile_icon.svg"><img>
+            </a>
+          </li>
+        </ul>
+        <li id="toggle">
+          <a href="#">
+            &#x2630
+          </a>
+        </li >
       </ul>
     </nav>
+  
     <form id="createArticleForm">
       <label for="titleInput">Title</label>
       <input
         id="titleInput"
+        class="input"
         type="text"
-        placeholder="Please enter the title of article here..."
+        placeholder="The Title of your Article..."
       />
-      <label for="contentTextArea">Content</label>
-      <textarea
+      <div class="content-header">
+        <label for="contentTextArea">Content</label>
+        <div class="editor-buttons-wrapper">
+          <button class="editor-button" type="button" data-format="bold">
+            <i class="material-icons">&#xe238;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="italic">
+            <i class="material-icons">&#xe23f;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="underline">
+            <i class="material-icons">&#xe249;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="insertUnorderedList">
+            <i class="material-icons">&#xe241;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="insertOrderedList">
+            <i class="material-icons">&#xe242;</i>
+          </button>
+          <div id="editor-button-hx">
+            <button id="hx-caption" type="button">H</button>         
+            <button class="headline-buttons" type="button" data-format="formatBlock" data-param="h2">
+              h2
+            </button>
+            <button class="headline-buttons" type="button" data-format="formatBlock" data-param="h3">
+              h3
+            </button>
+            <button class="headline-buttons" type="button" data-format="formatBlock" data-param="h4">
+              h4
+            </button>
+            <button class="headline-buttons" type="button" data-format="formatBlock"  data-param="h5">
+              h5
+            </button>
+            <button class="headline-buttons" type="button" data-format="formatBlock"  data-param="h6">
+              h6
+            </button>
+          </div>
+
+          <button class="editor-button" type="button" data-format="justifyLeft">
+            <i class="material-icons">&#xe236;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="justifyCenter">
+            <i class="material-icons">&#xe234;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="justifyRight">
+            <i class="material-icons">&#xe237;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="justifyFull">
+            <i class="material-icons">&#xe235;</i>
+          </button>
+          <button class="editor-button" type="button" data-format="createlink">
+            <i class="material-icons">&#xe250;</i>
+          </button>
+        </div>
+
+      </div>
+      <div
+        contenteditable="true"
         id="contentTextArea"
+        class="input"
         type="password"
-        placeholder="Please enter your content here..."
+        placeholder="Start writing your Content here.."
       >
-      </textarea>
-      <button id="createArticleButton" type="submit">Create Article</button>
+    </div>
+      <div class="preview-submit">
+        <!-- <button id="previewArticleButton" type="submit">Preview</button> -->
+        <button id="createArticleButton" type="submit">Submit</button>
+      </div>
     </form>
-
-    <script>
-      window.onload = async (e) => {
-        const createArticleForm = document.getElementById("createArticleForm");
-        const contentTextArea = document.getElementById("contentTextArea");
-        const titleInput = document.getElementById("titleInput");
-        let userId = localStorage.getItem("userId"); 
-        userId = userId ? userId : "";
-        // we know that userId exist, because we check it in the home page and 
-        // if it no userId in local storage, this page wouldn't be shown at all
-        // but one more check it also usefull, to avoid undesired side effects
-
-
-        createArticleForm.onsubmit = async (e) => {
-          e.preventDefault();
-
-          const data = {
-            title: e.target.querySelector("#titleInput").value,
-            content: e.target.querySelector("#contentTextArea").value,
-            author: userId,
-          };
-
-          console.log(data);
-
-          fetch("/article/create", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          }).then(async (res) => {
-            const resData = await res.json();
-            console.log("data in create article page: ", resData);
-            window.alert("Article was successfully created");
-            titleInput.value = "";
-            contentTextArea.value = "";
-
-            // localStorage.set("userId", data.userId); setItem(), getItem(), removeItem(), clear()
-          });
-        };
-      };
-
-      window.onerror = async (err) => {
-        console.log("Error from window: ", err);
-      };
-    </script>
   </body>
 </html>
 
-<style type="text/css">
-  body {
-    background: yellow;
-  }
-</style>

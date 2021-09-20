@@ -1,0 +1,264 @@
+  /*
+  1. Allgemein
+
+  To Do
+  1.  use 
+      clamp(100px, 25vw, 200px)-> max(MINIMUM, min(PREFERRED, MAXIMUM))
+      on padding
+
+  2.  asd
+  */
+
+  /* load font */
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+  
+  * {  
+    /* border-box, damit child elemente nciht über die grenze von parent gehen */
+    box-sizing: border-box;
+    margin: 0;
+    /* padding: 0; */
+    font-family: "Montserrat", sans-serif;
+  }
+  
+  .header *{
+    padding: 0;
+  }
+
+  body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #f9faff;
+    scrollbar-gutter: auto;
+  }
+  
+  /*
+  2. Aussehen Header
+  */
+
+  /* Padding and Stlye of the NavBar */
+  .header {
+    background: black;
+    padding: 5px;
+    z-index: 2;
+    position: fixed;
+    /* top: 0; */
+    width: 100%;
+  }
+
+  nav li, nav a, nav li a {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: #BBBBBB;
+    text-decoration: none;
+    height: fit-content;
+  }
+  
+  .img-link {
+    display:flex;
+    align-items: center;
+  }
+
+  /* remove list design (Bulletpoints) from nav links */
+  .header ul {
+    list-style: none;
+  }
+    
+  /* remove link design from nav links */
+  .header a {
+    color: white;
+    text-decoration: none;
+  }
+
+  /*
+  2.1 Logo und Profile Picture
+  */
+
+  /* round profile picture */
+  .profile-picture{
+    max-width: 3vw;
+    min-width: 65px;
+    border-radius: 50%;
+  }
+
+  /* resize logo */
+  .logo {
+    max-width: 10vw;
+    min-width: 150px;
+  }
+
+
+  /*
+  3 Media Breakpoints
+  */
+
+  /* 
+  3.1 mobile navigation, standard view
+  */
+
+  /* Hamburger navigation aussehen */
+  .navigation li {
+    white-space: nowrap;
+    /* border-bottom: 1px #444 solid; */
+  }
+
+  .navigation a{
+    margin: 5px;
+  }
+
+  /* activate hamburger */ 
+  .navigation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* change display of would be hamburger items */
+  .navigation-primary.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* rearranger items to fit */
+  .logo-li {order: 1;}
+  #toggle {order: 0;}
+  .navigation-profile {order: 2;}
+
+  /* make toggle set width */
+  #toggle {
+    max-width: 4vw;
+    min-width: 65px;
+    text-align: center;
+  }
+
+  /* aussehen icons */
+  #toggle a {
+    font-size: 25px;
+    font-weight: 700;
+  }
+
+  /* set items to display:none, changes when hamburger is clicked
+  -> class active */
+  .navigation-primary {
+    width: 100%;
+    order: 3;
+    display: none;
+  }
+    
+  /* set items to display:none, changes when profile pic is clicked
+  -> class active */
+  .navigation-secondary {
+    display: none;
+  }
+  #profile {
+    order: 1;
+  }
+
+  /* CSS trickery to change Logo part1 */
+  .logo-li a img:last-child {
+    display:none;
+  }
+
+  /* Tablet navigation */
+  @media all and (min-width: 600px) {
+     /* rearranger items to fit */
+    /* .logo-li {order: 1;}
+    #toggle {order: 0;}
+    .navigation-profile {order: 2;}
+    .navigation-primary {order: 3;} */
+  } 
+
+  /* Desktop navigation */
+  @media all and (min-width: 900px) {
+    .navigation-primary {
+      display: flex;
+      width: auto;
+      justify-content: space-around;
+    }
+
+    #toggle {
+      display: none;
+    }
+
+    /* take buttons out of hamburger */
+    .navigation-profile, .navigation-secondary {
+      width: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    /* hide hamburger Login etc. */
+    .navigation-primary li:not(.navlink){
+      display:none;
+    }
+
+    /* beautify links */
+    .navlink {
+      margin: 0em 1em 0em 1em;
+    }
+
+    /* add hover effet to nav Links, but not to logo */
+    .navlink a:hover{
+      text-decoration-line: underline;
+      color: darkorange;
+    }
+
+    /* färbe buttons */
+    .button a {
+      padding: 7.5px 15px;
+      background: transparent;
+      border: 1px white solid;
+      border-radius: 5px;
+    }
+
+    /* button hover */
+    .button a:hover {
+      font-weight: bold;
+      color: darkorange;
+      border: 1px darkorange solid;
+    }
+
+    /* to calculate filter use this: https://codepen.io/sosuke/pen/Pjoqqp */
+    .profile-picture:hover {
+      /* filter: brightness(0) saturate(100%) invert(61%) sepia(31%) saturate(5303%) hue-rotate(1deg) brightness(103%) contrast(106%); */
+      box-shadow: 0px 0px 0px 2px darkorange;
+    }
+
+    /* CSS trickery to change Logo part2 */
+    .logo-li a:hover img:last-child {
+      display:inherit;
+    }
+    .logo-li a:hover img:first-child {
+      display:none;
+    }
+
+
+
+    .logo {
+      order: 0;
+    }
+
+    .navigation-primary {
+      order: 1;
+    }
+
+    .navigation-profile {
+      order: 2;
+    }
+
+    /* fallback, when screenflipping with open hamburger */
+    .navigation-primary.active {
+      flex-direction: row;
+    }
+  } 
+
+  
+  /* class for hiding elements */
+  .hide {
+    display: none !important;
+  }
+
+
